@@ -1,0 +1,878 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\begin_modules
+enumitem
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 0.2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+APML - Clustering
+\end_layout
+
+\begin_layout Author
+Rhea Chowers, 204150643
+\end_layout
+
+\begin_layout Section*
+Question 1
+\end_layout
+
+\begin_layout Standard
+To prove this we'll show that at each iteration the cost function's value
+ does not increase and therefore converges (since the cost function is greater
+ or equal to zero, and we are working on computers with limited accuracy).
+ Denote the centroids at the 
+\begin_inset Formula $t$
+\end_inset
+
+ iteration as 
+\begin_inset Formula $\mu_{i}^{t}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+cost=\sum_{i=1}^{k}\sum_{x\in C_{i}^{t}}||x-\mu_{i}^{t}||^{2}
+\]
+
+\end_inset
+
+After this iteration we update 
+\begin_inset Formula $\mu_{i}=\frac{1}{\left|C_{i}\right|}\sum_{x\in C_{i}}x$
+\end_inset
+
+.
+ Notice that 
+\begin_inset Formula $\mu_{i}$
+\end_inset
+
+ which minimizes 
+\begin_inset Formula $\sum_{x\in C_{i}^{t}}||x-\mu_{i}^{t}||^{2}$
+\end_inset
+
+ is the center of mass which is 
+\begin_inset Formula $\mu_{i}=\frac{1}{\left|C_{i}\right|}\sum_{x\in C_{i}}x$
+\end_inset
+
+.
+ Therefore for each cluster:
+\begin_inset Formula 
+\[
+\sum_{i=1}^{k}\sum_{x\in C_{i}^{t}}||x-\mu_{i}^{t+1}||^{2}\leq\sum_{i=1}^{k}\sum_{x\in C_{i}^{t}}||x-\mu_{i}^{t}||^{2}
+\]
+
+\end_inset
+
+Now we move 
+\begin_inset Formula $x$
+\end_inset
+
+'s between the cluster i and j iff 
+\begin_inset Formula $||x-\mu_{j}||<||x-\mu_{i}||$
+\end_inset
+
+.
+ Therefore:
+\begin_inset Formula 
+\[
+\sum_{i=1}^{k}\sum_{x\in C_{i}^{t+1}}||x-\mu_{i}^{t+1}||^{2}<\sum_{i=1}^{k}\sum_{x\in C_{i}^{t}}||x-\mu_{i}^{t+1}||^{2}
+\]
+
+\end_inset
+
+plugging everything together we get that:
+\begin_inset Formula 
+\[
+cost_{t+1}=\sum_{i=1}^{k}\sum_{x\in C_{i}^{t+1}}||x-\mu_{i}^{t+1}||^{2}<\sum_{i=1}^{k}\sum_{x\in C_{i}^{t}}||x-\mu_{i}^{t+1}||^{2}\leq\sum_{i=1}^{k}\sum_{x\in C_{i}^{t}}||x-\mu_{i}^{t}||^{2}=cost_{t}
+\]
+
+\end_inset
+
+And we get the required.
+\end_layout
+
+\begin_layout Section*
+Question 2
+\end_layout
+
+\begin_layout Enumerate
+Observe the rectangle around the origin 
+\begin_inset Formula $\left(a,1\right),\left(a,-1\right),\left(-a,1\right),\left(-a,-1\right)$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $k=2$
+\end_inset
+
+.
+ If we initialize the 2 centroids at 
+\begin_inset Formula $\left(0,\pm1\right)$
+\end_inset
+
+ we get that the two clusters are 
+\begin_inset Formula $\left(a,1\right),\left(-a,1\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\left(-a,-1\right),\left(a,-1\right)$
+\end_inset
+
+ - the uppper points and lower points.
+ The value of the cost function is 
+\begin_inset Formula $c_{k-means}=4a^{2}$
+\end_inset
+
+.
+ Notice that k-means won't move any point to the other cluster since the
+ distance of any point from the other cluster's centroid is 
+\begin_inset Formula $\sqrt{2^{2}+a^{2}}$
+\end_inset
+
+ while from its own centroid is 
+\begin_inset Formula $a<\sqrt{2^{2}+a^{2}}$
+\end_inset
+
+.
+ For any 
+\begin_inset Formula $a>1$
+\end_inset
+
+ we get that the optimal centroids are at 
+\begin_inset Formula $\left(1,0\right)$
+\end_inset
+
+ and 
+\begin_inset Formula $\left(-1,0\right)$
+\end_inset
+
+ where the cost is 
+\begin_inset Formula $c_{opt}=4$
+\end_inset
+
+.
+ Therefore for any 
+\begin_inset Formula $a>1$
+\end_inset
+
+ we get 
+\begin_inset Formula $c_{k-means}=4a^{2}>4=c_{opt}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+An example of a set of points with a number optimal solutions is the set
+ of the unit square in 2d - 
+\begin_inset Formula $(1,1),(1,-1),(-1,1),\left(-1,-1\right)$
+\end_inset
+
+ when clustered into 2 clustered - each neighboring pair can be clustered
+ together with the same total cost: 
+\begin_inset Formula $c=4$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section*
+Question 3
+\end_layout
+
+\begin_layout Enumerate
+The probability of sampling a specific good initialization is 
+\begin_inset Formula $p=\prod_{i=1}^{k}\alpha_{i}$
+\end_inset
+
+ - since we want to sample exactly one point from each cluster at the i'th
+ sampling.
+ Taking into consideration that there are 
+\begin_inset Formula $k!$
+\end_inset
+
+ ways to order 
+\begin_inset Formula $\alpha_{1},...,\alpha_{k}$
+\end_inset
+
+ we get that the probability for a any good event is 
+\begin_inset Formula $p=k!\prod_{i=1}^{k}\alpha_{i}$
+\end_inset
+
+.
+ Therefore the expected number of trials is 
+\begin_inset Formula $EX=\frac{1}{p}=\frac{1}{k!\prod_{i=1}^{k}\alpha_{i}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+We want to find the maximum of 
+\begin_inset Formula $\prod_{i=1}^{k}\alpha_{i}$
+\end_inset
+
+ subject to 
+\begin_inset Formula $\sum_{i=1}^{k}\alpha_{i}=1$
+\end_inset
+
+.
+ We can use lagrange multipliers and see that 
+\begin_inset Formula 
+\[
+\frac{d}{d\alpha_{j}}\left(\prod_{i=1}^{k}\alpha_{i}+\lambda\left(1-\sum_{i=1}^{k}\alpha_{i}\right)\right)=0\Rightarrow\frac{1}{\alpha_{j}}\prod_{i=1}^{k}\alpha_{k}-\lambda=0\Rightarrow\lambda=\prod_{i\neq j}\alpha_{i}
+\]
+
+\end_inset
+
+Since this is true for every 
+\begin_inset Formula $\alpha_{j}$
+\end_inset
+
+ we get that 
+\begin_inset Formula $\forall m\neq n:\prod_{i\neq m}\alpha_{i}=\prod_{i\neq n}\alpha_{i}$
+\end_inset
+
+ giving us the result that all 
+\begin_inset Formula $\alpha_{i}$
+\end_inset
+
+ must be equal and therefore 
+\begin_inset Formula $\sum_{i=1}^{k}\alpha_{i}=k\alpha_{i}=1\Rightarrow\alpha=\frac{1}{k}$
+\end_inset
+
+ - meaning the clusters are evenly distributed.
+ Plugging that into the result from (1) we get that:
+\begin_inset Formula 
+\[
+EX=\frac{1}{k!\prod_{i=1}^{k}\alpha_{i}}=\frac{1}{k!\left(1/k\right)^{k}}=\frac{k^{k}}{k!}
+\]
+
+\end_inset
+
+ Using Sterling's approximation which is a good approximation even for low
+ values of 
+\begin_inset Formula $k!$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\frac{k^{k}}{k!}\approx\frac{k^{k}}{\sqrt{2\pi k}\left(\frac{k}{e}\right)^{k}}=\frac{e^{k}}{\sqrt{2\pi k}}
+\]
+
+\end_inset
+
+Meaning that in the best case the expected number of initializations is
+ exponential in 
+\begin_inset Formula $k$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+From complexity theory, we know that things that grow exponentially are
+ not feasible.
+ But, in most cases our 
+\begin_inset Formula $k$
+\end_inset
+
+ isn't very large, and lies in the 
+\series bold
+low 
+\series default
+single digit range.
+ Even for 
+\begin_inset Formula $k=10$
+\end_inset
+
+ we would get 
+\begin_inset Formula $EX\approx2700$
+\end_inset
+
+ which isn't an infeasible number of initialization iterations.
+\end_layout
+
+\begin_layout Section*
+K means vs Spectral Clustering
+\end_layout
+
+\begin_layout Standard
+K means preforms the best when we have clusters which are seperable by hyperplan
+es due to it being based on euclidian distances between the points.
+ Therefore we expect it to fail on tasks such as the circle clustering,
+ as can be seen in the following figure:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename circles_kmeans.png
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+On the other hand, spectral clustering using a gaussian kernel gives better
+ results since this method uncovers the 
+\begin_inset Quotes eld
+\end_inset
+
+hidden
+\begin_inset Quotes erd
+\end_inset
+
+ (in a euclidian point of view) connected components in the graph:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename spectral_clustering_circles.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We can see that this is the case for the APML data as well - the first figure
+ displays the kmeans algorithm's result and the second displays the spectral
+ clustering using a mnn kernel:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename k=9.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename APML Spectral Clustering - Mnn, M=16.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Parameters of Spectral Clustering
+\end_layout
+
+\begin_layout Standard
+The parameters of spectral clustering - m for the mnn and 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ for the gaussian kernel - define connectivity between the samples.
+ While mnn is straightforward, 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ can be thought of as a 'radius' around each point where samples that fall
+ in this radius are considered neighbors and the rest are not (this is of
+ course done in a smooth manner and not discreticly).
+ Therefore, choosing this parameters depends on the specific set of points
+ we are looking at.
+ For example, in the circles dataset we don't want to choose a large 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ - although the distances between two opposite points in each circle is
+ 
+\begin_inset Formula $2r$
+\end_inset
+
+, the distance between two points in different circles can be 
+\begin_inset Formula $r$
+\end_inset
+
+.
+ Therefore we need to choose 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ s.t.
+ only points in the same circle will be considered neighbors, and rely on
+ the transitivity of connectiveness for clustering entire circles together.
+\begin_inset Newline newline
+\end_inset
+
+For the mnn case, we'll show see how this affects us in practice.
+ The following figures cluster the APML data using different neighbor parameters
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename APML Spectral Clustering - Mnn, M=8.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename APML Spectral Clustering - Mnn, M=16.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+And for the gaussian kernel, we calculated 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ according to different percentiles.
+ We can see that for low values we get excellent clustering:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename Circles Spectral Clustering - Gaussian, sigma=0.12152539188409484.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+But for higher values of 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ we get that the definition of neighbor starts to include points from different
+ circles, and we get a result more similar to a regular k-means:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename Circles Spectral Clustering - Gaussian, sigma=0.9637173182060583.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Plotting the Similarity Graph
+\end_layout
+
+\begin_layout Standard
+In the following figure we can see the similarity matrices depicted for
+ the original similarity matrix (a gaussian kernel of the distances matrix
+ for shuffled data) and after it has been sorted according to the clustering
+ returned by the spectral clustering algorithm.
+ In this case I used the true value of k, and divided 4 circles around the
+ origin into 4 clusters.
+ We can clearly see that the clusters form square blocks in the similarity
+ matrix, each block the size of the points in the cluster.
+ This way we can easily understand why the eigenvectors of the laplacian
+ are indicators of cluster members.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename similaritymatrices_circles.png
+	scale 35
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Choosing K
+\end_layout
+
+\begin_layout Standard
+In the following figure we can see a demonstration of the effectiveness
+ of the 
+\begin_inset Quotes eld
+\end_inset
+
+Elbow
+\begin_inset Quotes erd
+\end_inset
+
+ method.
+ I created a synthetic data set - for each k, I generated k normally distributed
+ set of points in 2d (of a random size between 100 and 200) with the same
+ variance and different mean.
+ For each of the 
+\begin_inset Quotes eld
+\end_inset
+
+true
+\begin_inset Quotes erd
+\end_inset
+
+ k's I calculated the cost of k-means for a wide range of values of k.
+ In the following plot the y-axis represents the cost and the x-axis the
+ value of k.
+ The real value of k is represented by a vertical line.
+ We can see that the vertical line intersects with the elbow of each plot,
+ therefore demonstrating its effectiveness - if we were to choose the 
+\begin_inset Quotes eld
+\end_inset
+
+elbow
+\begin_inset Quotes erd
+\end_inset
+
+ k we would be very close (
+\begin_inset Formula $\pm1$
+\end_inset
+
+ relative to the true value, depending on how we define the exact point
+ of the elbow) if not exactly on the right value of k.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename elbow.png
+	scale 35
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Eigengap
+\end_layout
+
+\begin_layout Standard
+In the following figure we can see the first 15 eigenvalues of the normalized
+ laplacian in accending order for the APML data:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename APML_data_eigenvalues.png
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+As clearly shown in the figure, the first 9 eigenvalues are very close to
+ zero, and the 10'th eigenvalue takes a first 'jump' in value, and creates
+ the first eigengap.
+ We know that the correct clustering for the data is 9 clusters and this
+ supports this claim (since each cluster can be derived from some eigenvector
+ composed of 1's and 0's of the laplacian with eigenvalue 0, indicating
+ which samples are in the cluster).
+ 
+\end_layout
+
+\begin_layout Section*
+Biological Clustering
+\end_layout
+
+\begin_layout Standard
+Now we can put what we have learned to real use.
+ First of all, just by observing the similarity charts we get a sense of
+ the correct clustering, we can see that clustering with 
+\begin_inset Formula $k=4$
+\end_inset
+
+ creates four equally sized clusters, while using 
+\begin_inset Formula $k=3,5,6$
+\end_inset
+
+ returns an unbalanced clustering.
+ If we knew that the data was uniformly distributed (which we don't) we
+ could choose 
+\begin_inset Formula $k=4$
+\end_inset
+
+ just by these graphs (the number of clusters in each image is 3,4,5,6 according
+ly):
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename biodata/similarity mnn for different m and k/k3m11.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename biodata/similarity mnn for different m and k/k4m11.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename biodata/similarity mnn for different m and k/k5m11.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename biodata/similarity mnn for different m and k/k6m11.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Next we can look at the elbow and eigengap methods.
+ Using the elbow method we can see it is around 4-5, strengthening our observati
+on from before:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename biodata/biodata_elbow.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Next we would like to calculate the eigengap.
+ I tried this for a couple of values of 
+\begin_inset Formula $\sigma$
+\end_inset
+
+.
+ For example, for 
+\begin_inset Formula $\sigma\approx4$
+\end_inset
+
+ we get that the eigengap is also around 
+\begin_inset Formula $k\approx4$
+\end_inset
+
+ as before.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename biodata/loseigengap.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+But for different values of 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ such as 
+\begin_inset Formula $\sigma\approx5$
+\end_inset
+
+ we can see that the eigengap is at 
+\begin_inset Formula $k=2$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename biodata/eigengap_p2.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We conclude by understanding that first of all the data is clusterable -
+ for 
+\begin_inset Formula $k=3,4,5,6$
+\end_inset
+
+ we can see meaningful clusters, and for 
+\begin_inset Formula $k=4,5$
+\end_inset
+
+ we get justification from the elbow and eigengap method.
+ On the other hand, we can see that the eigengap changes when applying a
+ different 
+\begin_inset Formula $\sigma$
+\end_inset
+
+.
+ This leaves us with questions - should we take the 
+\begin_inset Formula $k$
+\end_inset
+
+ that spectral clustering (eigengap) and the elbow method (kmeans) agree
+ on? Should we continue testing various values of 
+\begin_inset Formula $\sigma$
+\end_inset
+
+? This is an entire field of study so we will leave this as an open question.
+\end_layout
+
+\begin_layout Section*
+tSNE
+\end_layout
+
+\begin_layout Standard
+In the following figure we can see the dimensional reductions of the 8x8
+ MNIST database to 2-d.
+ Just from looking at the image we can see that tSNE returns highly seperable
+ clusters compared to the PCA dimensionality reduction, which returns an
+ almost uniform cluster.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename tsne_pac.png
+	scale 30
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+But this isn't enough.
+ Obviously, k-means will achieve a relatively good result in seperating
+ the tSNE clusters.
+ But now we must wonder if these seperable clusters are actually the different
+ digits in the MNIST dataset or not.
+ To do this, the next figure shows the two dimensionality reductions with
+ the true data labels.
+ As clearly seen in the image, the clusters created by the tSNE algorithm
+ are almost identical to the true labeling, meaning points with the same
+ label are clustered together.
+ In PCA we also see a trend - points with the same label are mostly in the
+ same region, but due to the low seperability of the reduction these tend
+ to overlap.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename tsne_vs_pac.png
+	scale 30
+
+\end_inset
+
+Now we can apply the k-means algorithm to show that it would have managed
+ clustering using the tSNE reduction, and less succesfully with the PCA
+ reduction.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename tsne_kmeans.png
+	scale 30
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

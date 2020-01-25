@@ -1,0 +1,357 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\begin_modules
+enumitem
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 0.2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+APML - Ex 2
+\end_layout
+
+\begin_layout Author
+Rhea Chowers, 204150643
+\end_layout
+
+\begin_layout Section*
+Theoretical Questions
+\end_layout
+
+\begin_layout Subsection
+MEMM contains HMM - Cancelled
+\end_layout
+
+\begin_layout Subsection
+Higher Order Markov Model - Cancelled
+\end_layout
+
+\begin_layout Subsection
+Energy Based Model Gradient
+\end_layout
+
+\begin_layout Enumerate
+We saw that for the MEMM 
+\begin_inset Formula 
+\[
+\mathbb{P}\left(y_{1:n}\vert x_{1:n}\right)=\prod_{t}\frac{e^{w^{T}\phi\left(x_{1:n},y_{t-1},y_{t},t\right)}}{Z}=\prod_{t}p\left(y_{t-1\rightarrow t}\right)
+\]
+
+\end_inset
+
+Thus 
+\begin_inset Formula $-E\left(x;\theta\right)=-E\left(y_{t}|y_{t-1},x_{1..n};\theta\right)=w^{T}\phi\left(x_{1:n},y_{t-1},y_{t},t\right)$
+\end_inset
+
+.
+ Therefore the energy is minus the product of the weights and the feature
+ function.
+\end_layout
+
+\begin_layout Enumerate
+For a general energy based model:
+\begin_inset Formula 
+\[
+\log p\left(x\right)=\log\left(\frac{1}{Z}e^{-E\left(x;\theta\right)}\right)=-E\left(x;\theta\right)-\log Z=-\left(E\left(x;\theta\right)+\log\left(\sum_{x'}e^{-E\left(x';\theta\right)}\right)\right)\Rightarrow
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{\partial}{\partial\theta}\left(\log p\left(x\right)\right)=-\left(\frac{\partial E\left(x;\theta\right)}{\partial\theta}\right)-\frac{\partial}{\partial\theta}\left(\log\left(\sum_{x'}e^{-E\left(x';\theta\right)}\right)\right)=-\left(\frac{\partial E\left(x;\theta\right)}{\partial\theta}\right)-\frac{1}{\sum_{x'\sim P_{\theta}}e^{-E\left(x';\theta\right)}}\cdot\left(\frac{\partial}{\partial\theta}\left(\sum_{x'\sim P_{\theta}}e^{-E\left(x';\theta\right)}\right)\right)=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=-\left(\frac{\partial E\left(x;\theta\right)}{\partial\theta}\right)+\frac{1}{Z}\sum_{x'\sim P_{\theta}}\left(\frac{\partial E\left(x';\theta\right)}{\partial\theta}\right)e^{-E\left(x';\theta\right)}
+\]
+
+\end_inset
+
+Inputting the calculation into an expectation:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\underset{x\sim D}{\mathbb{E}}\left[\frac{\partial\log\left(p\left(x\right)\right)}{\partial\theta}\right]=\sum_{x\in D}\left(\frac{\partial\log\left(p\left(x\right)\right)}{\partial\theta}\cdot p\left(x\right)\right)=\sum_{x\in D}\left(\left(-\left(\frac{\partial E\left(x;\theta\right)}{\partial\theta}\right)+\frac{1}{Z}\sum_{x'\sim P_{\theta}}\left(\frac{\partial E\left(x';\theta\right)}{\partial\theta}\right)e^{-E\left(x';\theta\right)}\right)\cdot p\left(x\right)\right)=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\sum_{x\in D}\left(\frac{p\left(x\right)}{Z}\sum_{x'\sim P_{\theta}}\left(\frac{\partial E\left(x';\theta\right)}{\partial\theta}\right)e^{-E\left(x';\theta\right)}\right)-\sum_{x\in D}\left(p\left(x\right)\cdot\frac{\partial E\left(x;\theta\right)}{\partial\theta}\right)=\sum_{x\in D}p\left(x\right)\sum_{x'\sim P_{\theta}}\left(\frac{\partial E\left(x';\theta\right)}{\partial\theta}\right)\underbrace{\frac{e^{-E\left(x';\theta\right)}}{Z}}_{=p\left(x'\right)}-\underset{x\sim D}{\mathbb{E}}\frac{\partial E\left(x;\theta\right)}{\partial\theta}=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=\sum_{x\in D}p\left(x\right)\sum_{x'\sim P_{\theta}}\left(\frac{\partial E\left(x';\theta\right)}{\partial\theta}\right)p\left(x'\right)-\underset{x\sim D}{\mathbb{E}}\frac{\partial E\left(x;\theta\right)}{\partial\theta}=\sum_{x\in D}p\left(x\right)\left(\underset{x'\sim P_{\theta}}{\mathbb{E}}\frac{\partial E\left(x';\theta\right)}{\partial\theta}\right)-\underset{x\sim D}{\mathbb{E}}\frac{\partial E\left(x;\theta\right)}{\partial\theta}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=\underset{x'\sim P_{\theta}}{\mathbb{E}}\frac{\partial E\left(x';\theta\right)}{\partial\theta}\underbrace{\sum_{x\in D}p\left(x\right)}_{=1}-\underset{x\sim D}{\mathbb{E}}\frac{\partial E\left(x;\theta\right)}{\partial\theta}=\underset{x\sim P_{\theta}}{\mathbb{E}}\frac{\partial E\left(x;\theta\right)}{\partial\theta}-\underset{x\sim D}{\mathbb{E}}\frac{\partial E\left(x;\theta\right)}{\partial\theta}
+\]
+
+\end_inset
+
+as required.
+\end_layout
+
+\begin_layout Subsection
+MLE for HMM
+\end_layout
+
+\begin_layout Standard
+S - num words, T - time = n
+\end_layout
+
+\begin_layout Standard
+We'll use Lagrange multipliers to solve this problem.
+ We wish to estimate 
+\begin_inset Formula $t_{i,j}=argmax_{t}\left\{ l\left(S,\theta\right)\right\} $
+\end_inset
+
+ subject to 
+\begin_inset Formula $\forall i\in\left[\left|P\right|\right]:\sum_{j=1}^{\left|P\right|}t_{i,j}=1$
+\end_inset
+
+ for 
+\begin_inset Formula $P$
+\end_inset
+
+ being the set of all possible PoS tags.
+ This is because 
+\begin_inset Formula $t$
+\end_inset
+
+ is a probability function, and the sum of all transitions from 
+\begin_inset Formula $i$
+\end_inset
+
+ is 1.
+ Define our new function: 
+\begin_inset Formula $1-\sum_{j=1}^{\left|P\right|}t_{i,j}$
+\end_inset
+
+ and install it into a new log likelihood function: 
+\begin_inset Formula 
+\[
+l'\left(S,\theta\right)=\sum_{i=1}^{\left|S\right|}\sum_{j=1}^{\left|x^{i}\right|}\log t_{y_{j-1},y_{j}}+\sum_{k=1}^{\left|P\right|}\lambda_{k}\left(1-\sum_{j=1}^{\left|P\right|}t_{y_{k},y_{j}}\right)\Rightarrow\frac{\partial l'\left(S,\theta\right)}{\partial t_{y_{j-1},y_{j}}}=0\Rightarrow
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\sum_{i=1}^{\left|S\right|}\frac{1}{t_{y_{j-1},y_{j}}}-\lambda_{k}=0\Rightarrow\lambda_{k}^{-1}\sum_{i=1}^{\left|S\right|}1_{y_{j-1}\rightarrow y_{j}}=t_{y_{j-1},y_{j}}
+\]
+
+\end_inset
+
+Where 
+\begin_inset Formula $1_{y_{j-1}\rightarrow y_{j}}$
+\end_inset
+
+ is an indicator.
+\begin_inset Formula 
+\[
+\frac{\partial l'\left(S,\theta\right)}{\partial\lambda_{k}}=0\Rightarrow\left(1-\sum_{j=1}^{\left|P\right|}t_{y_{k},y_{j}}\right)=0\Rightarrow\sum_{j=1}^{\left|P\right|}t_{y_{k},y_{j}}=1
+\]
+
+\end_inset
+
+Substituting what we got from the first partial derivative:
+\begin_inset Formula 
+\[
+\sum_{j=1}^{\left|P\right|}t_{y_{k},y_{j}}=\sum_{j=1}^{\left|P\right|}\left(\lambda_{k}^{-1}\sum_{i=1}^{\left|S\right|}1_{y_{j-1}\rightarrow y_{j}}\right)=1\Rightarrow\lambda_{k}=\sum_{j=1}^{\left|P\right|}\sum_{i=1}^{\left|S\right|}1_{y_{j-1}\rightarrow y_{j}}
+\]
+
+\end_inset
+
+Installing the phrase above back into the first partial derivative:
+\begin_inset Formula 
+\[
+\lambda_{k}^{-1}\sum_{i=1}^{\left|S\right|}1_{y_{j-1}\rightarrow y_{j}}=t_{y_{j-1},y_{j}}\Rightarrow t_{y_{j-1},y_{j}}=\frac{\sum_{i=1}^{\left|S\right|}1_{y_{j-1}\rightarrow y_{j}}}{\sum_{j=1}^{\left|P\right|}\sum_{i=1}^{\left|S\right|}1_{y_{j-1}\rightarrow y_{j}}}=\frac{\#\left(y_{j-1}\rightarrow y_{j}\right)}{\#\left(y_{j-1}\right)}
+\]
+
+\end_inset
+
+Since 
+\begin_inset Formula $j-1$
+\end_inset
+
+ is the 'time' and not a specific we get that the phrase is the number of
+ times we saw a transition 
+\begin_inset Formula $y_{i}\rightarrow y_{j}$
+\end_inset
+
+ divided by the number of times we saw 
+\begin_inset Formula $y_{i}$
+\end_inset
+
+ transitioning to something, getting as required:
+\begin_inset Formula 
+\[
+\hat{t}_{i,j}=\frac{\#\left(y_{i}\rightarrow y_{j}\right)}{\sum_{k}\#\left(y_{i}\rightarrow y_{k}\right)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section*
+Practical Part
+\end_layout
+
+\begin_layout Subsection*
+Sampling the HMM
+\end_layout
+
+\begin_layout Standard
+Eventhough the sampling function returns sentences without any logic, we
+ can still recognize a gramatical structure, for example: 
+\begin_inset Quotes eld
+\end_inset
+
+The RARE_WORD Steinhardt has than opposition of cash on those football
+\begin_inset Quotes erd
+\end_inset
+
+, or 
+\begin_inset Quotes eld
+\end_inset
+
+they says the president exporter
+\begin_inset Quotes erd
+\end_inset
+
+ - replacing words in these sentences with the same PoS taggings could make
+ perfect sense (
+\begin_inset Quotes eld
+\end_inset
+
+They saw the president
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection*
+Testing the models
+\end_layout
+
+\begin_layout Standard
+When training the baseline model on 10%, 25%, 90% of the data and testing
+ on 10% I get an accuracy rate of 85%~, 88%~, 91%~ accordingly.
+\begin_inset Newline newline
+\end_inset
+
+When training the HMM model on 10%, 25%, 90% of the data and testing on
+ 10% I get an accuracy rate of 87%~, 91%~, 94%~ accordingly.
+\begin_inset Newline newline
+\end_inset
+
+When training the MEMM model I encounter a problem - the runtime of it is
+ way too long.
+ Unfortunately, I managed to only train it on 10% of the data and get 33%
+ accuracy, and failed to do so on the rest.
+ However, while running the Perceptron algorithm I test the model every
+ 1000 samples on 64 random samples.
+ Doing so we can see that the model improves (not drasticly, since it is
+ tested on only 64 samples), but still improves.
+\end_layout
+
+\end_body
+\end_document

@@ -1,0 +1,1632 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\begin_modules
+enumitem
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 0.2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+APML - Ex 4
+\end_layout
+
+\begin_layout Author
+Rhea Chowers, 204150643
+\end_layout
+
+\begin_layout Section*
+Information Bottleneck
+\end_layout
+
+\begin_layout Subsection*
+Information
+\end_layout
+
+\begin_layout Enumerate
+By definition: 
+\begin_inset Formula 
+\[
+H\left(X,Y\right)=-\sum_{x}\sum_{y}p\left(x,y\right)\cdot\log\left(p\left(x,y\right)\right)
+\]
+
+\end_inset
+
+and
+\begin_inset Formula 
+\[
+H\left(Y|X\right)=\sum_{x}p\left(x\right)H\left(Y|X=x\right)=-\sum_{x}p\left(x\right)\sum_{y}p\left(y|x\right)\cdot\log\left(p\left(y|x\right)\right)
+\]
+
+\end_inset
+
+Expanding the first phrase using the fact that: 
+\begin_inset Formula $p\left(y,x\right)=p\left(y|x\right)p\left(x\right)$
+\end_inset
+
+
+\begin_inset Formula 
+\[
+H\left(X,Y\right)=-\sum_{x}\sum_{y}p\left(x,y\right)\cdot\log\left(p\left(x,y\right)\right)=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=-\sum_{x}\sum_{y}p\left(x,y\right)\cdot\log\left(p\left(y|x\right)p\left(x\right)\right)=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=-\sum_{x}\sum_{y}p\left(x,y\right)\cdot\left(\log p\left(y|x\right)+\log p\left(x\right)\right)=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=-\sum_{x}\sum_{y}p\left(x,y\right)\log p\left(x\right)-\sum_{x}\sum_{y}p\left(x,y\right)\log p\left(y|x\right)
+\]
+
+\end_inset
+
+Now since 
+\begin_inset Formula $\sum_{y}p\left(x,y\right)=p\left(x\right)$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+=-\sum_{x}p\left(x\right)\log p\left(x\right)-\sum_{x}\sum_{y}p\left(y|x\right)p\left(x\right)\log p\left(y|x\right)=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=H\left(X\right)-\sum_{x}p\left(x\right)\sum_{y}p\left(y|x\right)\log p\left(y|x\right)=H\left(X\right)+H\left(Y|X\right)
+\]
+
+\end_inset
+
+as required.
+\end_layout
+
+\begin_layout Enumerate
+By definition:
+\begin_inset Formula 
+\[
+CE\left(p,q\right)=-\sum_{x}p\left(x\right)\cdot\log q\left(x\right)=-\sum_{x}p\left(x\right)\cdot\left(\log q\left(x\right)-\log p\left(x\right)+\log p\left(x\right)\right)=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=-\sum_{x}p\left(x\right)\cdot\left(\log q\left(x\right)-\log p\left(x\right)\right)-\sum_{x}p\left(x\right)\log p\left(x\right)=-\sum_{x}p\left(x\right)\log\frac{q\left(x\right)}{p\left(x\right)}+H\left(X\right)=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=D_{K,L}\left(p,q\right)+H\left(X\right)
+\]
+
+\end_inset
+
+as required.
+\end_layout
+
+\begin_layout Enumerate
+By definition:
+\begin_inset Formula 
+\[
+I\left(X,Y\right)=\sum_{x,y}p\left(x,y\right)\cdot\log\frac{p\left(x,y\right)}{p\left(x\right)p\left(y\right)}=\sum_{x,y}p\left(x,y\right)\cdot\left(\log\frac{p\left(x,y\right)}{p\left(y\right)}-\log p\left(x\right)\right)=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=\sum_{x,y}p\left(x,y\right)\log p\left(x|y\right)-\sum_{x,y}p\left(x,y\right)\log p\left(x\right)=H\left(X\right)-\left(-\sum_{x,y}p\left(x,y\right)\log p\left(x|y\right)\right)=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=H\left(X\right)-\left(-\sum_{y}\sum_{x}p\left(x|y\right)p\left(y\right)\log p\left(x|y\right)\right)=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=H\left(X\right)-\left(-\sum_{y}p\left(y\right)\sum_{x}p\left(x|y\right)\log p\left(x|y\right)\right)=H\left(X\right)-H\left(X|Y\right)
+\]
+
+\end_inset
+
+as required.
+\end_layout
+
+\begin_layout Subsection*
+Statistics
+\end_layout
+
+\begin_layout Enumerate
+The mean of the sample:
+\begin_inset Formula 
+\[
+\overline{X}=\frac{1}{\left|X\right|}\sum_{X_{i}\in X}X_{i}
+\]
+
+\end_inset
+
+Assume the samples are drawn from a bernouli distribution.
+ Therefore:
+\begin_inset Formula 
+\[
+P_{\theta}\left(X_{i}=1\right)=\theta\,,\,P_{\theta}\left(X_{i}=0\right)=1-\theta
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Rightarrow P_{\theta}\left(X_{i}=x\right)=\theta^{x}\left(1-\theta\right)^{1-x}
+\]
+
+\end_inset
+
+Therefore for an entire sample:
+\begin_inset Formula 
+\[
+P_{\theta}\left(X_{1}=x_{1},X_{2}=x_{2},...,X_{n}=x_{n}\right)=\prod_{i=1}^{n}\theta^{x_{i}}\left(1-\theta\right)^{1-x_{i}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=\theta^{\sum x_{i}}\left(1-\theta\right)^{\sum1-x_{i}}=\theta^{\sum x_{i}}\left(1-\theta\right)^{|X|-\sum x_{i}}=\theta^{\left|X\right|\cdot\overline{X}}\left(1-\theta\right)^{\left|X\right|-\left|X\right|\cdot\overline{X}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Rightarrow P_{\theta}\left(X_{1}=x_{1},X_{2}=x_{2},...,X_{n}=x_{n}|\overline{X}=\overline{x}\right)=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=\frac{P_{\theta}\left(\overline{X}=\overline{x}|X_{1}=x_{1},X_{2}=x_{2},...,X_{n}=x_{n}\right)P_{\theta}\left(X_{1}=x_{1},X_{2}=x_{2},...,X_{n}=x_{n}\right)}{P\left(\overline{X}=\overline{x}\right)}=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=\frac{\theta^{\left|X\right|\cdot\overline{x}}\left(1-\theta\right)^{\left|X\right|-\left|X\right|\cdot\overline{x}}}{P\left(\overline{X}=\overline{x}\right)}
+\]
+
+\end_inset
+
+Now since we are dealing with a Bernoulli distribution, 
+\begin_inset Formula $\overline{X}=\frac{1}{\left|X\right|}\sum_{X_{i}\in X}X_{i}=\frac{1}{\left|X\right|}\cdot\#\text{of }X_{i}=1$
+\end_inset
+
+, since if 
+\begin_inset Formula $X_{i}=0$
+\end_inset
+
+ it doesn't contribute to the mean.
+ Therefore 
+\begin_inset Formula $P\left(\overline{X}=\overline{x}\right)=P\left(\left|X\right|\cdot\overline{x}=\#of\,ones\right)={\left|X\right| \choose \left|X\right|\cdot\overline{x}}\theta^{\left|X\right|\cdot\overline{x}}\left(1-\theta\right)^{\left|X\right|-\left|X\right|\cdot\overline{x}}$
+\end_inset
+
+ since we choose 
+\begin_inset Formula $\left|X\right|\cdot\overline{x}$
+\end_inset
+
+ tosses to have the value 
+\begin_inset Formula $1$
+\end_inset
+
+ and the rest get the value 0.
+ Therefore:
+\begin_inset Formula 
+\[
+P_{\theta}\left(X_{1}=x_{1},X_{2}=x_{2},...,X_{n}=x_{n}|\overline{X}=\overline{x}\right)=\frac{\theta^{\left|X\right|\cdot\overline{x}}\left(1-\theta\right)^{\left|X\right|-\left|X\right|\cdot\overline{x}}}{P\left(\overline{X}=\overline{x}\right)}=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=\frac{\theta^{\left|X\right|\cdot\overline{x}}\left(1-\theta\right)^{\left|X\right|-\left|X\right|\cdot\overline{x}}}{{\left|X\right| \choose \left|X\right|\cdot\overline{x}}\theta^{\left|X\right|\cdot\overline{x}}\left(1-\theta\right)^{\left|X\right|-\left|X\right|\cdot\overline{x}}}=\frac{1}{{\left|X\right| \choose \left|X\right|\cdot\overline{x}}}
+\]
+
+\end_inset
+
+and this is independent of 
+\begin_inset Formula $\theta$
+\end_inset
+
+, therefore the mean is a sufficient statistic.
+\end_layout
+
+\begin_layout Enumerate
+We wish to show that the statistic 
+\begin_inset Formula $T=X_{1}$
+\end_inset
+
+ is not minimal, meaning 
+\begin_inset Formula $P_{\theta}\left(X_{1}=x_{1},X_{2}=x_{2},...,X_{n}=x_{n}|X_{1}=x\right)$
+\end_inset
+
+ is not independent of 
+\begin_inset Formula $\theta$
+\end_inset
+
+.
+ This is of course logical since all the 
+\begin_inset Formula $X$
+\end_inset
+
+'s are drawn independently and therefore 
+\begin_inset Formula $X_{1}\perp X_{i}$
+\end_inset
+
+ for 
+\begin_inset Formula $i\neq1$
+\end_inset
+
+, meaning 
+\begin_inset Formula $X_{1}$
+\end_inset
+
+ can't contribute information about any other 
+\begin_inset Formula $X_{i}$
+\end_inset
+
+.
+ Formally:
+\begin_inset Formula 
+\[
+P_{\theta}\left(X_{1}=x_{1},X_{2}=x_{2},...,X_{n}=x_{n}|X_{1}=x\right)=\frac{\theta^{\sum x_{i}}\left(1-\theta\right)^{\sum1-x_{i}}}{P\left(X_{1}=x\right)}=\frac{\theta^{\sum x_{i}}\left(1-\theta\right)^{\sum1-x_{i}}}{\theta^{x}\left(1-\theta\right)^{1-x}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=\theta^{\left(\sum x_{i}\right)-x}\left(1-\theta\right)^{\left(\sum1-x_{i}\right)-\left(1-x\right)}=\theta^{\sum_{i\neq1}x_{i}}\left(1-\theta\right)^{\sum_{i\neq1}1-x_{i}}
+\]
+
+\end_inset
+
+meaning the conditional probability is dependent on 
+\begin_inset Formula $\theta$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Let 
+\begin_inset Formula $T\left(X_{1},X_{2},...,X_{n}\right)=\left(X_{1},X_{2},...,X_{n}\right)$
+\end_inset
+
+ the statistic that returns the sample.
+ Denote the sample 
+\begin_inset Formula $S$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+P_{\theta}\left(X_{1}=x_{1},X_{2}=x_{2},...,X_{n}=x_{n}|T\left(S\right)=S\right)=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+P_{\theta}\left(X_{1}=x_{1},X_{2}=x_{2},...,X_{n}=x_{n}|X_{1}=x_{1},X_{2}=x_{2},...,X_{n}=x_{n}\right)=1\perp\theta
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Let 
+\begin_inset Formula $S,T$
+\end_inset
+
+ be any two minimal sufficient statistics.
+ Therefore, by definition both 
+\begin_inset Formula $S,T$
+\end_inset
+
+ are sufficient statistics.
+ Since 
+\begin_inset Formula $S$
+\end_inset
+
+ is minimal, by definition 
+\begin_inset Formula $S=S\left(T\right)$
+\end_inset
+
+, on the other hand 
+\begin_inset Formula $T$
+\end_inset
+
+ is minimal so 
+\begin_inset Formula $T=T\left(S\right)$
+\end_inset
+
+.
+ Therefore, given 
+\begin_inset Formula $S$
+\end_inset
+
+ or 
+\begin_inset Formula $T$
+\end_inset
+
+ we can calculate the other, and therefore neither contributes more information
+ than the other on a sample, and therefore they are equivalent.
+\end_layout
+
+\begin_layout Enumerate
+A minimal sufficient statistic 
+\begin_inset Formula $M$
+\end_inset
+
+ is a function of any sufficient statistic 
+\begin_inset Formula $T$
+\end_inset
+
+, and a sufficient statistic is a function of the sample 
+\begin_inset Formula $X$
+\end_inset
+
+, therefore 
+\begin_inset Formula $X\rightarrow T\rightarrow M$
+\end_inset
+
+ is a markov chain and from the data processing inequality we get that 
+\begin_inset Formula $I\left(T,X\right)\geq I\left(M,X\right)$
+\end_inset
+
+ for any sufficient statistic 
+\begin_inset Formula $T$
+\end_inset
+
+.
+ Therefore a minimal sufficient statistic maintains 
+\begin_inset Formula $I\left(M,X\right)=\min_{T}I\left(T,X\right)$
+\end_inset
+
+ since a minimal sufficient statistic is also a sufficient statistic.
+\end_layout
+
+\begin_layout Subsection*
+Information Bottleneck
+\end_layout
+
+\begin_layout Enumerate
+The sampling process described can be presented as the following markov
+ chain, since 
+\begin_inset Formula $Y$
+\end_inset
+
+ is dependent on some parameter 
+\begin_inset Formula $\theta$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+\theta\rightarrow Y\rightarrow X\rightarrow T
+\]
+
+\end_inset
+
+We wish to show that 
+\begin_inset Formula $I\left(Y,X\right)=I\left(\theta,T\right)$
+\end_inset
+
+.
+ Since 
+\begin_inset Formula $T$
+\end_inset
+
+ is sufficient we know from definition that 
+\begin_inset Formula $I\left(\theta,T\right)=I\left(\theta,X\right)$
+\end_inset
+
+.
+ From the markov chain we know that 
+\begin_inset Formula $X\perp\theta|Y\Rightarrow$
+\end_inset
+
+ 
+\begin_inset Formula $Y$
+\end_inset
+
+ is a sufficient statistic of 
+\begin_inset Formula $X$
+\end_inset
+
+ as well, meaning that 
+\begin_inset Formula $I\left(\theta,X\right)=I\left(\theta,Y\right)$
+\end_inset
+
+.
+ Therefore 
+\begin_inset Formula $I\left(\theta,T\right)=I\left(\theta,Y\right)$
+\end_inset
+
+.
+ From the data processing inequality we know that 
+\begin_inset Formula $I\left(Y,X\right)\leq I\left(Y,T\right)$
+\end_inset
+
+ but since 
+\begin_inset Formula $T$
+\end_inset
+
+ is a sufficient statistic we know that 
+\begin_inset Formula $X\perp\theta|T$
+\end_inset
+
+ and therefore 
+\begin_inset Formula $\theta\rightarrow Y\rightarrow T\rightarrow X$
+\end_inset
+
+ is also a markov chain and we get that 
+\begin_inset Formula $I\left(Y,X\right)=I\left(Y,T\right)$
+\end_inset
+
+.
+ The following is also a markov chain: 
+\begin_inset Formula $T\rightarrow\theta\rightarrow Y\rightarrow X$
+\end_inset
+
+ and therefore from the data processing inequality 
+\begin_inset Formula $I\left(T,\theta\right)\geq I\left(T,Y\right)$
+\end_inset
+
+ but from the original markov chain we know that 
+\begin_inset Formula $I\left(Y,T\right)\geq I\left(\theta,T\right)$
+\end_inset
+
+ and combining the inequalities we get 
+\begin_inset Formula $I\left(Y,T\right)=I\left(\theta,T\right)$
+\end_inset
+
+.
+ But we've shown that 
+\begin_inset Formula $I\left(Y,X\right)=I\left(Y,T\right)$
+\end_inset
+
+ and therefore we get that 
+\begin_inset Formula $I\left(Y,X\right)=I\left(\theta,T\right)$
+\end_inset
+
+ as required.
+\end_layout
+
+\begin_layout Enumerate
+Since a minimal sufficient statistic 
+\begin_inset Formula $T$
+\end_inset
+
+ is a function of any other sufficient statistic, and for any sufficient
+ statistic 
+\begin_inset Formula $S$
+\end_inset
+
+, 
+\begin_inset Formula $X\perp\theta|S$
+\end_inset
+
+ wecan therefore interpert this in terms of the data processing inequality
+ and get that 
+\begin_inset Formula $Y\rightarrow T\rightarrow S\rightarrow X$
+\end_inset
+
+ is a markov chain, therefore from the data processing inequality:
+\begin_inset Formula 
+\[
+I\left(T,Y\right)\geq I\left(S,Y\right)
+\]
+
+\end_inset
+
+Since this is true for every sufficient statistic (and since we have proven
+ that all minimal sufficient statistics are equivalent) we get that a minimal
+ sufficient statistic maximizes 
+\begin_inset Formula $I\left(T,Y\right)$
+\end_inset
+
+ with respect to any sufficient statistic.
+ Proving that a minimal sufficient statistic 
+\begin_inset Formula $T$
+\end_inset
+
+ maintains that 
+\begin_inset Formula $I\left(T,X\right)=\min_{S}I\left(S,X\right)$
+\end_inset
+
+ for any sufficient statistic 
+\begin_inset Formula $S$
+\end_inset
+
+ was already proven earlier.
+\begin_inset Newline newline
+\end_inset
+
+Concluding, a minimal sufficient statistic maintains that 
+\begin_inset Formula $\forall S$
+\end_inset
+
+ a sufficient statistic:
+\begin_inset Formula 
+\[
+I\left(X,T\right)=\min_{S}I\left(S,X\right)
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+I\left(T,Y\right)\geq I\left(S,Y\right)
+\]
+
+\end_inset
+
+proving the required.
+\end_layout
+
+\begin_layout Section*
+Manifold Learning
+\end_layout
+
+\begin_layout Subsection*
+PCA
+\end_layout
+
+\begin_layout Enumerate
+Let 
+\begin_inset Formula $S=\frac{1}{n-1}\sum_{i=1}^{n}\left(x_{i}-\overline{x}\right)\left(x_{i}-\overline{x}\right)^{T}=\frac{1}{n-1}X^{T}X$
+\end_inset
+
+ for 
+\begin_inset Formula $X$
+\end_inset
+
+ the normalized sample matrix.
+ Let 
+\begin_inset Formula $y\in\mathbb{R}^{n}$
+\end_inset
+
+ be some vector:
+\begin_inset Formula 
+\[
+y^{T}Sy=y^{T}\left(\frac{1}{n-1}XX^{T}\right)y=
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=\frac{1}{n-1}\left(y^{T}X\right)\left(X^{T}y\right)=\frac{1}{n-1}\left\langle X^{T}y,X^{T}y\right\rangle =\frac{1}{n-1}\left|\left|X^{T}y\right|\right|_{2}\geq0
+\]
+
+\end_inset
+
+We didn't assume anything about 
+\begin_inset Formula $y$
+\end_inset
+
+, therefore this is true for any vector in 
+\begin_inset Formula $\mathbb{R}^{n}$
+\end_inset
+
+, and by definition we get that 
+\begin_inset Formula $S$
+\end_inset
+
+ is PSD matrix.
+\end_layout
+
+\begin_layout Enumerate
+Since normalizing 
+\begin_inset Formula $X$
+\end_inset
+
+ is subtracting a constant row vector 
+\begin_inset Formula $\overline{x}$
+\end_inset
+
+ from each row, and since 
+\begin_inset Formula $\overline{x}=\frac{1}{n}\sum x_{i}\Rightarrow\overline{x}\in row\left(X\right)$
+\end_inset
+
+, we get that for the normalized sample matrix 
+\begin_inset Formula $\overline{X}$
+\end_inset
+
+: 
+\begin_inset Formula $row\left(X\right)=row\left(\overline{X}\right)$
+\end_inset
+
+ (their row spaces are the same).
+ 
+\begin_inset Newline newline
+\end_inset
+
+If the data sits on a d-dimensional subspace then that means that 
+\begin_inset Formula $rank\left(X\right)=dim\left(row\left(X\right)\right)=d\Rightarrow rank\left(\overline{X}\right)=dim\left(row\left(\overline{X}\right)\right)=d$
+\end_inset
+
+, since there can be at most 
+\begin_inset Formula $d$
+\end_inset
+
+ linearly independent samples.
+ 
+\begin_inset Newline newline
+\end_inset
+
+Now we'll claim 
+\begin_inset Formula $rank\left(X^{T}X\right)=rank\left(X\right)$
+\end_inset
+
+ and conclude that the data sits on a d-dimensional subspace iff 
+\begin_inset Formula $S$
+\end_inset
+
+ is of rank 
+\begin_inset Formula $d$
+\end_inset
+
+.
+ We'll show that using the rank nullity theorem, meaning that 
+\begin_inset Formula $nullity\left(X^{T}X\right)=nullity\left(X\right)\Leftrightarrow rank\left(X\right)=rank\left(X^{T}X\right)$
+\end_inset
+
+.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $\Leftarrow$
+\end_inset
+
+Let 
+\begin_inset Formula $x\in nullity\left(X\right)\Rightarrow Xx=\boldsymbol{0}\Rightarrow X^{T}Xx=X^{T}\boldsymbol{0}=0\Rightarrow x\in nullity\left(X^{T}X\right)$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $\Rightarrow$
+\end_inset
+
+Let 
+\begin_inset Formula $x\in nullity\left(X^{T}X\right)$
+\end_inset
+
+ s.t.
+ 
+\begin_inset Formula $x\neq\boldsymbol{0}$
+\end_inset
+
+.
+ Then: 
+\begin_inset Formula $X^{T}Xx=\boldsymbol{0}\Rightarrow x^{T}X^{T}Xx=x^{T}\boldsymbol{0}=0$
+\end_inset
+
+.
+ But on the other hand: 
+\begin_inset Formula $x^{T}X^{T}Xx=\left\langle Xx,Xx\right\rangle =||Xx||_{2}=0$
+\end_inset
+
+ therefore 
+\begin_inset Formula $Xx=\boldsymbol{0}\Rightarrow x\in nullity\left(X\right)$
+\end_inset
+
+ proving both directions.
+\begin_inset Newline newline
+\end_inset
+
+We conclude, 
+\begin_inset Formula $rank\left(S\right)=rank\left(X\right)$
+\end_inset
+
+, and 
+\begin_inset Formula $rank\left(X\right)=d$
+\end_inset
+
+ iff the data lies on a d-dimensional subspace, therefore proving the required.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $XX^{T}$
+\end_inset
+
+ is symmetric and orthogonaly diagonizable, and therefore 
+\begin_inset Formula $XX^{T}=U\Lambda U^{T}$
+\end_inset
+
+.
+ 
+\begin_inset Formula $S$
+\end_inset
+
+ is 
+\begin_inset Formula $X$
+\end_inset
+
+ but normalized and centered.
+ The normalization of 
+\begin_inset Formula $XX^{T}$
+\end_inset
+
+ is the same as dividing the eigenvalues on the diagonal of 
+\begin_inset Formula $\Lambda$
+\end_inset
+
+ by 
+\begin_inset Formula $n-1$
+\end_inset
+
+, and recentering is identical to observing the data in a new point of reference
+ (or moving the origin), and therefore doesn't affect the distances between
+ any two points and we'll ignore this.
+ The data lies on the space spanned by the eigenvectors of 
+\begin_inset Formula $XX^{T}$
+\end_inset
+
+ which are the columns of 
+\begin_inset Formula $U$
+\end_inset
+
+.
+ Since the rank is 
+\begin_inset Formula $d$
+\end_inset
+
+, we know that the data points can be spanned using only 
+\begin_inset Formula $d$
+\end_inset
+
+ eigenvectors of 
+\begin_inset Formula $XX^{T}$
+\end_inset
+
+, meaning 
+\begin_inset Formula $\forall x\in X:x=\sum_{i=1}^{d}\left\langle x,u_{i}\right\rangle u_{i}$
+\end_inset
+
+.
+ Performing PCA spans the data on the d-dimensional subspace 
+\begin_inset Formula $V\subset\mathbb{R}^{n}$
+\end_inset
+
+ using the eigenvectors of 
+\begin_inset Formula $S$
+\end_inset
+
+ which are those defined by 
+\begin_inset Formula $U$
+\end_inset
+
+.
+ Therefore, after the dimensionality reduction, every point 
+\begin_inset Formula $x$
+\end_inset
+
+ is still spanned by 
+\begin_inset Formula $u_{1},...,u_{d}$
+\end_inset
+
+ and therefore distances between points are preserved:
+\begin_inset Formula 
+\[
+\underbrace{||x_{k}-x_{j}||}_{\text{distance before reduction}}=||\sum_{i=1}^{n}\left\langle x_{k},u_{i}\right\rangle u_{i}-\sum_{i=1}^{n}\left\langle x_{j},u_{i}\right\rangle u_{i}||\underbrace{=}_{\text{matrix of rank d}}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=||\sum_{i=1}^{d}\left\langle x_{k},u_{i}\right\rangle u_{i}-\sum_{i=1}^{d}\left\langle x_{j},u_{i}\right\rangle u_{i}||=\underbrace{||x_{k}^{d}-x_{j}^{d}||}_{\text{distance after reduction}}
+\]
+
+\end_inset
+
+and therefore the transformation is an isometry.
+\end_layout
+
+\begin_layout Subsection*
+LLE
+\end_layout
+
+\begin_layout Enumerate
+For 
+\begin_inset Formula $G_{ij}=z_{i}^{T}z_{j}$
+\end_inset
+
+:
+\begin_inset Formula 
+\[
+||\sum_{j\in N\left(i\right)}w_{j}z_{j}||^{2}=\left\langle \sum_{j\in N\left(i\right)}w_{j}z_{j},\sum_{j\in N\left(i\right)}w_{j}z_{j}\right\rangle =
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=\left\langle w_{1}z_{1}+w_{2}z_{2}+...+w_{n}z_{n},w_{1}z_{1}+w_{2}z_{2}+...+w_{n}z_{n}\right\rangle =
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+=\sum_{i,j}w_{i}w_{j}z_{i}^{T}z_{j}=\sum_{i,j}w_{i}w_{j}G_{i,j}=w^{T}Gw
+\]
+
+\end_inset
+
+as required.
+\end_layout
+
+\begin_layout Enumerate
+We want 
+\begin_inset Formula $\sum w_{i}=1\Leftrightarrow w^{T}\boldsymbol{1}=1\Leftrightarrow w^{T}\boldsymbol{1}-1=0$
+\end_inset
+
+.
+ Using lagrange multipliers:
+\begin_inset Formula 
+\[
+f\left(w,\lambda\right)=w^{T}Gw-\lambda\left(w^{T}\boldsymbol{1}-1\right)\Rightarrow
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\frac{\partial f}{\partial w}=\frac{\partial}{\partial w}\left(w^{T}Gw\right)-\lambda\boldsymbol{1}=w^{T}G^{T}+w^{T}G-\lambda\boldsymbol{1}\underbrace{=}_{G^{T}=G}2w^{T}G-\lambda\boldsymbol{1}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Rightarrow\frac{\partial f}{\partial w}=0\Rightarrow2w^{T}G-\lambda\boldsymbol{1}=0\Rightarrow w^{T}=\frac{\lambda\boldsymbol{1}^{T}}{2}G^{-1}
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Rightarrow w=\frac{\lambda}{2}G^{-1}\boldsymbol{1}
+\]
+
+\end_inset
+
+as required.
+\end_layout
+
+\begin_layout Subsection*
+Diffusion Maps
+\end_layout
+
+\begin_layout Enumerate
+Let 
+\begin_inset Formula $A_{ij}=P\left(X_{t}=x_{j}|X_{t-1}=x_{i}\right)$
+\end_inset
+
+.
+ We'll prove that 
+\begin_inset Formula $A_{ij}^{t}=P\left(X_{t}=x_{j}|X_{0}=x_{i}\right)$
+\end_inset
+
+ by induction:
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+For 
+\begin_inset Formula $t=1$
+\end_inset
+
+ this is trivial since it is just the definition of 
+\begin_inset Formula $A$
+\end_inset
+
+: 
+\begin_inset Formula 
+\[
+A_{ij}^{1}=A_{ij}=P\left(X_{t}=x_{j}|X_{t-1}=x_{i}\right)=P\left(X_{1}=x_{j}|X_{0}=x_{i}\right)
+\]
+
+\end_inset
+
+as required.
+\end_layout
+
+\begin_layout Enumerate
+Hypothesis: assume correctness for 
+\begin_inset Formula $t$
+\end_inset
+
+ - 
+\begin_inset Formula $A_{ij}^{t}=P\left(X_{t}=x_{j}|X_{0}=x_{i}\right)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Enumerate
+Prove for 
+\begin_inset Formula $t+1$
+\end_inset
+
+: Look at 
+\begin_inset Formula $A^{t+1}=A^{t}A$
+\end_inset
+
+, and examine the i,j coordinate:
+\begin_inset Formula 
+\[
+A_{ij}^{t+1}=\left(A^{t}A\right)_{ij}=\sum_{k}A_{ik}^{t}A_{kj}=\sum_{k}P\left(X_{t}=x_{k}|X_{0}=x_{i}\right)\cdot P\left(X_{t'}=x_{j}|X_{t'-1}=x_{k}\right)
+\]
+
+\end_inset
+
+examine one part of the sum: 
+\begin_inset Formula $P\left(X_{t}=x_{k}|X_{0}=x_{i}\right)\cdot P\left(X_{t'}=x_{j}|X_{t'-1}=x_{k}\right)$
+\end_inset
+
+ - this is the probability of getting from 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ to 
+\begin_inset Formula $x_{k}$
+\end_inset
+
+ in 
+\begin_inset Formula $t$
+\end_inset
+
+ steps times the probability of getting from 
+\begin_inset Formula $x_{k}$
+\end_inset
+
+ to 
+\begin_inset Formula $x_{j}$
+\end_inset
+
+ in one step.
+ Therefore this is the probability of getting from 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ to 
+\begin_inset Formula $x_{j}$
+\end_inset
+
+ in 
+\begin_inset Formula $t+1$
+\end_inset
+
+ steps, using 
+\begin_inset Formula $x_{k}$
+\end_inset
+
+ at the 
+\begin_inset Formula $t$
+\end_inset
+
+'th step.
+ Therefore, summing over all 
+\begin_inset Formula $x_{k}$
+\end_inset
+
+'s is the total probability of getting from 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ to 
+\begin_inset Formula $x_{j}$
+\end_inset
+
+ in 
+\begin_inset Formula $t+1$
+\end_inset
+
+ steps (since the transition has to occur through some 
+\begin_inset Formula $x_{k}$
+\end_inset
+
+).
+ Notice that this is exactly the sum! therefore:
+\begin_inset Formula 
+\[
+A_{ij}^{t+1}=\sum_{k}P\left(X_{t}=x_{k}|X_{0}=x_{i}\right)\cdot P\left(X_{t'}=x_{j}|X_{t'-1}=x_{k}\right)=P\left(X_{t+1}=x_{j}|X_{0}=x_{i}\right)
+\]
+
+\end_inset
+
+as required.
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+\begin_inset Formula $A$
+\end_inset
+
+'s rows are all non-negative and sum to 1.
+ Therefore:
+\begin_inset Formula 
+\[
+\forall i:\left(A\boldsymbol{1}\right)_{i}=\left\langle row_{i}^{A},\boldsymbol{1}\right\rangle =\sum_{j}A_{ij}\cdot1=1
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\Rightarrow A\boldsymbol{1}=1\cdot\boldsymbol{1}
+\]
+
+\end_inset
+
+and we get that 
+\begin_inset Formula $\boldsymbol{1}$
+\end_inset
+
+ is an eigenvector of 
+\begin_inset Formula $A$
+\end_inset
+
+ with eigenvalue 
+\begin_inset Formula $1$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+Assume by negation that 
+\begin_inset Formula $\exists\lambda$
+\end_inset
+
+ s.t.
+ 
+\begin_inset Formula $\left|\lambda\right|>1\wedge\exists u:Au=\lambda u$
+\end_inset
+
+.
+ Let 
+\begin_inset Formula $\left|u_{i}\right|=\max_{k}\left|u_{k}\right|$
+\end_inset
+
+ the largest element of the corresponding eigenvector in absolute value.
+ Therefore:
+\begin_inset Formula 
+\[
+\left(Au\right)_{i}=\sum_{j}A_{ij}u_{j}=\lambda u_{i}
+\]
+
+\end_inset
+
+We know that 
+\begin_inset Formula $\forall i,j:0\leq A_{ij}\leq1$
+\end_inset
+
+ since it is a stochastic matrix.
+ Therefore:
+\begin_inset Formula 
+\[
+\left|\left(Au\right)_{i}\right|=\left|\sum_{j}A_{ij}u_{j}\right|\leq\sum_{j}A_{ij}\max_{k}\left|u_{k}\right|=\sum_{j}A_{ij}\left|u_{i}\right|=\left|u_{i}\right|
+\]
+
+\end_inset
+
+On the other hand:
+\begin_inset Formula 
+\[
+\left|\left(Au\right)_{i}\right|=\left|\lambda u_{i}\right|=\left|\lambda\right|\cdot\left|u_{i}\right|>\left|u_{i}\right|
+\]
+
+\end_inset
+
+and we get that:
+\begin_inset Formula 
+\[
+\left|u_{i}\right|<\left|\left(Au\right)_{i}\right|\leq\left|u_{i}\right|
+\]
+
+\end_inset
+
+which is a contradiction.
+\end_layout
+
+\begin_layout Section*
+Practical Part
+\end_layout
+
+\begin_layout Subsection*
+Swiss Roll Comparison
+\end_layout
+
+\begin_layout Standard
+Let's compare the swiss roll's dimensionality reduction.
+ 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename MDS swiss roll.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For MDS we can see that this is more or less a simple projection onto a
+ linear subspace (
+\begin_inset Quotes eld
+\end_inset
+
+a slice of the swiss roll
+\begin_inset Quotes erd
+\end_inset
+
+) which doesn't learn anything about the manifold itself.
+ MDS is based on distances between points, but for the swiss roll, two points
+ can be really close in the embedded dimension by far away in the intrinsic
+ coordinates, for example two points which are on different 
+\begin_inset Quotes eld
+\end_inset
+
+layers
+\begin_inset Quotes erd
+\end_inset
+
+ of the swiss roll.
+ We can see that this problem is preserved in 2-dimension and red points
+ are close to green points (for example) although they are distant in the
+ manifold's intrinsic coordinates.
+ Concluding - MDS performs poorly on the swiss roll, and probably on any
+ manifold with similar properties.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename LLE different ks.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We can see that LLE performs pretty good, and the performance increases
+ with the number of neighbors in the presented range.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Graphics
+	filename SWISS LLE 100 Neighbs.png
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Above we see what happens when increasing k too much.
+ We rely on the assumption that the manifold is locally linear, and locality
+ is defined by some 
+\begin_inset Formula $\delta$
+\end_inset
+
+ which is a distance parameter between the point and its neighbors.
+ Increasing 
+\begin_inset Formula $k$
+\end_inset
+
+ is similar to taking a large neighborhood or 
+\begin_inset Formula $\delta$
+\end_inset
+
+, and at that range the data is no longer linear, and therefore the reduction
+ doesn't work as well.
+ 
+\begin_inset Newline newline
+\end_inset
+
+In the next figure we mainly see that the value of 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ has an important effect on the dimensionality reduction using DM.
+ This parameter, like 
+\begin_inset Formula $k$
+\end_inset
+
+ in LLE defines the neighborhood of a point.
+ We can see that at larger values of 
+\begin_inset Formula $\sigma$
+\end_inset
+
+, the neighborhood for each point is larger and points in different layers
+ of the swiss roll are considered neighbors, and we get that structure in
+ 2-d.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename DM different ts. sigmas.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Concluding, MDS performs poorly on the swiss roll since it perserves distances.
+ Since the swiss roll is symmetric along one of its axises, a 2-d isometry
+ is simply slicing along the roll, which is exactly what we can see that
+ MDS does.
+ LLE performs good on the data, and finding 
+\end_layout
+
+\begin_layout Subsection*
+Parameter Tweaking
+\end_layout
+
+\begin_layout Standard
+As seen in the example above, LLE is easier to tweak relative to Diffusion
+ Maps.
+ Both these methods have a parameter which determines the neighborhood of
+ a data point - the number of neighbors for LLE and 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ for DM.
+ Both of them can be found using a 
+\begin_inset Quotes eld
+\end_inset
+
+zoom in
+\begin_inset Quotes erd
+\end_inset
+
+ search - I searched around a large range of parameters, and then focused
+ around one which returned a good result in order to tweak it.
+ On the other hand, DM have another parameter 
+\begin_inset Formula $t$
+\end_inset
+
+ which determines the diffusion process.
+ Since 
+\begin_inset Formula $t$
+\end_inset
+
+ is used as a power of the eigenvalues of a stochastic matrix, taking large
+ values of t (above 100) causes numerical issues, and therefore limits.
+ In the swiss roll example, we can see that this parameter doesn't really
+ affect the shape of the reduced data, and is more useful in clustering
+ (since taking a large 
+\begin_inset Formula $t$
+\end_inset
+
+ reduces the probability of 
+\begin_inset Quotes eld
+\end_inset
+
+jumping
+\begin_inset Quotes erd
+\end_inset
+
+ between far points, and therefore gives better seperation).
+\end_layout
+
+\begin_layout Subsection*
+Scree plots
+\end_layout
+
+\begin_layout Standard
+Look at the scree plots generated by MDS and PCA for different noises (=values
+ of 
+\begin_inset Formula $\sigma$
+\end_inset
+
+ when sampling noise from a gaussian distribution).
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename MDS scree.png
+	scale 40
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename PCA scree.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We can see that although the data lies on a 2-d subspace, PCA doesn't single
+ out 2 eigenvalues (for any amount of noise) while MDS does this.
+ Therefore we conclude that the eigenvalues in MDS are better scaled, and
+ therefore we see better seperation.
+ The eigenvalues in the PCA method measure the variance of the data for
+ each direction (when direction is determined by the corresponding eigenvectors)
+, while in MDS they measure the variance of the distances for each direction.
+ Therefore we can see that MDS singles out 2 directions relevant to the
+ distance (which is the case since the data lies on a 2-d space) while PCA
+ only finds one direction which is relevant to the data.
+ For both methods we see that adding noises smooths the eigenvalue curve,
+ which was expected since the noise isn't necessarily contained in the subspace
+ the original data is in.
+ 
+\end_layout
+
+\begin_layout Subsection*
+MNIST
+\end_layout
+
+\begin_layout Standard
+In the following plots we can see that MDS (and DM) perform alot better
+ than LLE on the MNIST dataset (and all three perform worse than tSNE, as
+ we saw in the last exercise).
+ What we understand from this is that the euclidian distance between images
+ is a more dominant parameter in determining the data's clustering (which
+ point is an image of what number) than the linear locality of the data.
+ For DM we can see that general clusters are formed, but are not seperated
+ so good.
+ This might be because the euclidian distances between different clusters
+ of images aren't large, and are therefore preserved (and even squeezed
+ due to the effect of dimensionality recution) in the lower dimension.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename MDS on MNIST.png
+	scale 40
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename LLE on MNIST.png
+	scale 40
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename DM on MNIST.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Faces Dataset
+\end_layout
+
+\begin_layout Standard
+In the following figures (produced after parameter tweaking), we can see
+ that all three methods manage to learn certain parameters of the data.
+ Of course the faces presented are a relatively small sample of the data,
+ but we can still see some trends.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename LLE faces k14.png
+	scale 40
+
+\end_inset
+
+Above, we can see that LLE is able to roughly recognize the angle of the
+ face.
+ In the lower dimension this is roughly measured by the x axis - faces looking
+ left are on the left, faces looking straight are in the middle and looking
+ right are on the right.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename MDS faces.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We can see above that MDS learns a bit more about the lighting of the faces,
+ where poorly lit images are clustered together, relative to better lit
+ images.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename DM faces t10 s20.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We can see that DM learns both parameters mentioned above - both lighting
+ and angle of the face.
+ Again faces looking left are on the left and those looking right are on
+ the right, and poorly lit images are also all clustered together.
+\end_layout
+
+\end_body
+\end_document
